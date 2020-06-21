@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BrigadeEdit} from '../model/brigade-edit';
+import {API_URL} from '../app.component';
 
-const localUrl = 'http://localhost:8888/api/brigade';
-//const localUrl = '/api/brigade';
+const localUrl = API_URL + '/brigade';
 
 @Injectable()
 export class BrigadeService {

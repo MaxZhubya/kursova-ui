@@ -1,9 +1,9 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {EquipmentEdit} from '../model/equipment-edit';
+import {API_URL} from '../app.component';
 
-const localUrl = 'http://localhost:8888/api/equipment';
-//const localUrl = '/api/equipment';
+const localUrl = API_URL + '/equipment';
 
 @Injectable()
 export class EquipmentService {

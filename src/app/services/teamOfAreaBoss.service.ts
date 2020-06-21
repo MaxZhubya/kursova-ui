@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TeamOfAreaBossEdit} from '../model/teamOfAreaBoss-edit';
+import {API_URL} from '../app.component';
 
-const localUrl = 'http://localhost:8888/api/teamOfAreaBoss';
-//const localUrl = '/api/teamOfAreaBoss';
+const localUrl = API_URL + '/teamOfAreaBoss';
 
 @Injectable()
 export class TeamOfAreaBossService {

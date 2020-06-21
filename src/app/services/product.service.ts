@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ProductEdit} from '../model/product-edit';
+import {API_URL} from '../app.component';
 
-const localUrl = 'http://localhost:8888/api/product';
-//const localUrl = '/api/product';
+const localUrl = API_URL + '/product';
 
 @Injectable()
 export class ProductService {

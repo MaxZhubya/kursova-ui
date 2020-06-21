@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {WorkshopEdit} from '../model/workshop-edit';
+import {API_URL} from '../app.component';
 
-const localUrl = 'http://localhost:8888/api/workshop';
-//const localUrl = '/api/workshop';
+const localUrl = API_URL + '/workshop';
 
 @Injectable()
 export class WorkshopService {

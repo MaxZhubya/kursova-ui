@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AreaEdit} from '../model/area-edit';
+import {API_URL} from '../app.component';
 
-const localUrl = 'http://localhost:8888/api/area';
-//const localUrl = '/api/area';
+const localUrl = API_URL + '/area';
 
 @Injectable()
 export class AreaService {
