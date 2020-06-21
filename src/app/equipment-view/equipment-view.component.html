@@ -1,0 +1,126 @@
+
+<button class="add-equipment-button" mat-raised-button (click)="addEquipment()">Add</button>
+
+<mat-accordion>
+
+  <!--  --------------------   Add Equipment Panel   ----------------- -->
+
+  <mat-expansion-panel *ngIf="addEquipmentEvent" expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Equipment id: NEW
+      </mat-panel-title>
+      <mat-panel-description>
+        Add new Equipment
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="equipment-description" fxLayout="row" fxLayoutAlign="start" >
+      <mat-form-field class="equipment-add-panel-form">
+        <mat-label>Definition:</mat-label>
+        <input matInput placeholder="Equipment definition" [(ngModel)]="newDefinition">
+      </mat-form-field>
+
+      <mat-form-field class="equipment-add-panel-form">
+        <mat-label>Type:</mat-label>
+        <mat-select (selectionChange)="onTypeChange($event)">
+          <mat-option *ngFor="let type of types" [value]="type.value">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="equipment-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="createEquipment()">Save</button>
+      <button mat-raised-button (click)="addEquipmentEvent = false">Cancel</button>
+    </div>
+  </mat-expansion-panel>
+
+  <!--  --------------------   Main Equipment Panel   ----------------- -->
+
+  <mat-expansion-panel *ngFor="let equipment of equipments" (closed)="onAfterCollapse(equipment)" >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Equipment id: {{equipment.equipmentId}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Created at: {{equipment.created}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="equipment-description" fxLayout="row" fxLayoutAlign="space-between start" >
+      <div>
+        <span>Modified at:&nbsp;&nbsp; <b>{{equipment.modified}}</b></span>
+      </div>
+      <div *ngIf="equipment.definition !== undefined; else elseDefinitionBlock">
+        <div *ngIf="!editEquipmentEvent">
+          <span>Definition:&nbsp;&nbsp; <b>{{equipment.definition}}</b></span>
+        </div>
+        <div *ngIf="editEquipmentEvent">
+          <mat-form-field class="equipment-add-panel-form">
+            <mat-label>Definition:</mat-label>
+            <input matInput placeholder="Definition" [(ngModel)]="newDefinition">
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-template #elseDefinitionBlock>Definition is not assigned</ng-template>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="editEquipment(equipment)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="equipment.type !== undefined; else elseTypeBlock">
+      <div *ngIf="!editEquipmentEvent">
+        <span>Equipment type:&nbsp;&nbsp; <b>{{equipment.type}}</b></span>
+      </div>
+      <div *ngIf="editEquipmentEvent">
+        <mat-form-field class="equipment-add-panel-form">
+          <mat-label>Type:</mat-label>
+          <mat-select (selectionChange)="onTypeChange($event)" [(value)]="selectedType.value">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <ng-template #elseTypeBlock>Type is not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="equipment.laboratory !== undefined; else elseLaboratoryBlock">
+      <div>
+        <span><b>Laboratory id:</b>&nbsp;&nbsp; <b>{{equipment.laboratory.laboratoryId}}</b></span>
+      </div>
+      <div class="equipment-description" fxLayout="row" fxLayoutAlign="space-between start">
+        <div>
+          <span>Definition:&nbsp;&nbsp; <b>{{equipment.laboratory.definition}}</b></span>
+        </div>
+      </div>
+      <div class="equipment-description" fxLayout="row" fxLayoutAlign="start" >
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{equipment.laboratory.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{equipment.laboratory.modified}}</b></span>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseLaboratoryBlock>Laboratory is not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div class="equipment-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="cancelEquipment(equipment)">Cancel</button>
+      <button mat-raised-button (click)="saveEquipment(equipment)">Save</button>
+      <button mat-raised-button (click)="deleteEquipment(equipment)">Delete</button>
+    </div>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

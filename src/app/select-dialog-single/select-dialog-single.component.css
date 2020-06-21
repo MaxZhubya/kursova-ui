@@ -1,0 +1,20 @@
+
+::ng-deep .single-dialog .mat-form-field {
+  width: 99% !important;
+}
+
+::ng-deep .single-dialog .mat-label {
+  width: 99% !important;
+}
+
+::ng-deep .single-dialog .mat-select {
+  width: 99% !important;
+}
+
+::ng-deep .single-dialog .mat-option {
+  width: 99% !important;
+}
+
+::ng-deep .single-dialog .mat-select-panel {
+  min-width: calc(100% + 1px) !important;
+}

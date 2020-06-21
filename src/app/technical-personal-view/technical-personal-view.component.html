@@ -1,0 +1,141 @@
+
+<button class="add-personal-button" mat-raised-button (click)="addTechnicalPersonal()">Add</button>
+
+<mat-accordion>
+
+  <!--  --------------------   Add TechnicalPersonal Panel   ----------------- -->
+
+  <mat-expansion-panel *ngIf="addPersonalEvent" expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Personal id: NEW
+      </mat-panel-title>
+      <mat-panel-description>
+        Add new Technical Personal
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="item-description">
+      <div fxLayout="row" fxLayoutAlign="start" >
+        <mat-form-field class="personal-add-panel-form">
+          <mat-label>Name:</mat-label>
+          <input matInput placeholder="Personal Name" [(ngModel)]="newName">
+        </mat-form-field>
+        <mat-form-field class="personal-add-panel-form">
+          <mat-label>Type:</mat-label>
+          <mat-select (selectionChange)="onTypeChange($event)">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="personal-add-panel-form">
+        <mat-label>Description:</mat-label>
+        <input matInput placeholder="Description" [(ngModel)]="newDescription">
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="personal-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="createTechnicalPersonal()">Save</button>
+      <button mat-raised-button (click)="addPersonalEvent = false">Cancel</button>
+    </div>
+  </mat-expansion-panel>
+
+  <!--  --------------------   Main TechnicalPersonal Panel   ----------------- -->
+
+  <mat-expansion-panel *ngFor="let personal of personals" (closed)="onAfterCollapse(personal)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Personal id: {{personal.techPersonalId}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Created at: {{personal.created}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="personal-description" fxLayout="row" fxLayoutAlign="space-between start" >
+      <div fxLayout="row" fxLayoutAlign="start" >
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{personal.modified}}</b></span>
+        </div>
+
+        <div *ngIf="!editPersonalEvent">
+          <span>Description:&nbsp;&nbsp; <b>{{personal.description}}</b></span>
+        </div>
+
+        <div *ngIf="editPersonalEvent">
+          <mat-form-field class="personal-add-panel-form">
+            <mat-label>Description:</mat-label>
+            <input matInput placeholder="Description" [(ngModel)]="newDescription">
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="editTechnicalPersonal(personal)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="personal-description" fxLayout="row" fxLayoutAlign="start">
+      <div  *ngIf="personal.personalName !== undefined; else elseNameBlock">
+        <div *ngIf="!editPersonalEvent">
+          <span>Name:&nbsp;&nbsp; <b>{{personal.personalName}}</b></span>
+        </div>
+        <div *ngIf="editPersonalEvent">
+          <mat-form-field class="personal-add-panel-form">
+            <mat-label>Name:</mat-label>
+            <input matInput placeholder="Personal Name" [(ngModel)]="newName">
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-template #elseNameBlock>Name is not assigned</ng-template>
+
+      <div  *ngIf="personal.personalType !== undefined; else elseTypeBlock">
+        <div *ngIf="!editPersonalEvent">
+          <span>Type:&nbsp;&nbsp; <b>{{personal.personalType}}</b></span>
+        </div>
+        <div *ngIf="editPersonalEvent">
+          <mat-form-field class="personal-add-panel-form">
+            <mat-label>Type:</mat-label>
+            <mat-select (selectionChange)="onTypeChange($event)" [(value)]="selectedType.value">
+              <mat-option *ngFor="let type of types" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-template #elseTypeBlock>Type is not assigned</ng-template>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="personal.teamOfAreaBoss !== undefined; else elseTeamBlock">
+      <div>
+        <span><b>Team id:</b>&nbsp;&nbsp; <b>{{personal.teamOfAreaBoss.teamId}}</b></span>
+      </div>
+      <div class="personal-description" fxLayout="row" fxLayoutAlign="space-between start">
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{personal.teamOfAreaBoss.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{personal.teamOfAreaBoss.modified}}</b></span>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseTeamBlock>Team is not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div class="personal-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="cancelPersonal(personal)">Cancel</button>
+      <button mat-raised-button (click)="savePersonal(personal)">Save</button>
+      <button mat-raised-button (click)="deletePersonal(personal)">Delete</button>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>

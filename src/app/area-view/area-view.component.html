@@ -1,0 +1,179 @@
+<!--
+ To add icon with outlined view:
+  <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
+-->
+
+<button class="add-item-button" mat-raised-button (click)="addArea()">Add</button>
+
+<mat-accordion>
+
+  <!--  --------------------   Add Area Panel   ----------------- -->
+
+   <mat-expansion-panel *ngIf="addAreaEvent" expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Area id: NEW
+      </mat-panel-title>
+      <mat-panel-description>
+        Add new Area
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Description:</mat-label>
+          <input matInput placeholder="Add Area description" [(ngModel)]="newAreaDescription" #areaDescription="ngModel">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="createArea(areaDescription)">Save</button>
+      <button mat-raised-button (click)="addAreaEvent = false; newAreaDescription = ''">Cancel</button>
+    </div>
+  </mat-expansion-panel>
+
+  <!--  --------------------   Main Areas Panel   ----------------- -->
+
+  <mat-expansion-panel *ngFor="let area of areas" (closed)="onAfterCollapse(area)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Area id: {{area.areaId}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Created at: {{area.created}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+      <div>
+        <span>Modified at:&nbsp;&nbsp; <b>{{area.modified}}</b></span>
+      </div>
+      <div>
+        <span>Description:&nbsp;&nbsp; <b>{{area.definition}}</b></span>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="area.teamOfAreaBoss !== undefined; else elseTeamBlock">
+      <div>
+        <span><b>Team of Boss id:</b>&nbsp;&nbsp; <b>{{area.teamOfAreaBoss.teamId}}</b></span>
+      </div>
+      <div class="item-description" fxLayout="row" fxLayoutAlign="space-between center" >
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{area.teamOfAreaBoss.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{area.teamOfAreaBoss.modified}}</b></span>
+        </div>
+        <button mat-icon-button  color="primary" (click)="deleteTeamOfAreaBossEvent(area)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </div>
+    <ng-template #elseTeamBlock>Team Of Area Boss is not assigned
+      <button mat-icon-button class="add-component-button" color="primary" (click)="addTeamOfAreaBossEvent(area)">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div>
+      <span><b>Brigades:</b></span>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="addBrigadeEvent(area)">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+
+    <div *ngIf="area.brigades !== undefined; else elseBrigadeBlock">
+      <div *ngFor="let brigade of area.brigades" class="item-description" fxLayout="row" fxLayoutAlign="space-between center" >
+        <div>
+          <span>ID:&nbsp;&nbsp; <b>{{brigade.brigadeId}}</b></span>
+        </div>
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{brigade.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{brigade.modified}}</b></span>
+        </div>
+        <button mat-icon-button color="primary" (click)="deleteBrigadeEvent(area, brigade)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </div>
+    <ng-template #elseBrigadeBlock>Are not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div>
+      <span><b>Products:</b></span>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="addProductEvent(area)">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+
+    <ng-container *ngIf="area.products !== undefined; else elseProductBlock">
+      <ng-container *ngFor="let product of area.products">
+        <div class="item-description" fxLayout="row" fxLayoutAlign="space-between center" >
+          <div>
+            <span>ID:&nbsp;&nbsp; <b>{{product.productId}}</b></span>
+          </div>
+          <div>
+            <span>Category:&nbsp;&nbsp; <b>{{product.category}}</b></span>
+          </div>
+          <div>
+            <span>Type:&nbsp;&nbsp; <b>{{product.type}}</b></span>
+          </div>
+          <button mat-icon-button color="primary" (click)="deleteProductEvent(area, product)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
+
+        <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+          <div>
+            <span>Created at:&nbsp;&nbsp; <b>{{product.created}}</b></span>
+          </div>
+          <div>
+            <span>Modified at:&nbsp;&nbsp; <b>{{product.modified}}</b></span>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #elseProductBlock>Are not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="area.workshop !== undefined; else elseWorkshopBlock">
+      <div>
+        <span><b>Workshop id:</b>&nbsp;&nbsp; <b>{{area.workshop.workshopId}}</b></span>
+      </div>
+      <div class="item-description" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>Description:&nbsp;&nbsp; <b>{{area.workshop.definition}}</b></span>
+      </div>
+      <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{area.workshop.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{area.workshop.modified}}</b></span>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseWorkshopBlock>Workshop is not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="cancelArea(area)">Cancel</button>
+      <button mat-raised-button (click)="saveArea(area)">Save</button>
+      <button mat-raised-button (click)="deleteArea(area)">Delete</button>
+    </div>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

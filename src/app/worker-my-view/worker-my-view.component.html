@@ -1,0 +1,123 @@
+
+<button class="add-worker-button" mat-raised-button (click)="addWorker()">Add</button>
+
+<mat-accordion>
+
+  <!--  --------------------   Add Worker Panel   ----------------- -->
+
+  <mat-expansion-panel *ngIf="addWorkerEvent" expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Worker id: NEW
+      </mat-panel-title>
+      <mat-panel-description>
+        Add new Worker
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="worker-description" fxLayout="row" fxLayoutAlign="start" >
+      <mat-form-field class="worker-add-panel-form">
+        <mat-label>Name:</mat-label>
+        <input matInput placeholder="Worker Name" [(ngModel)]="newName">
+      </mat-form-field>
+
+      <mat-form-field class="worker-add-panel-form">
+        <mat-label>Type:</mat-label>
+        <mat-select (selectionChange)="onTypeChange($event)">
+          <mat-option *ngFor="let type of types" [value]="type.value">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="worker-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="createWorker()">Save</button>
+      <button mat-raised-button (click)="addWorkerEvent = false">Cancel</button>
+    </div>
+  </mat-expansion-panel>
+
+  <!--  --------------------   Main Worker Panel   ----------------- -->
+
+  <mat-expansion-panel *ngFor="let worker of workers" (closed)="onAfterCollapse(worker)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Worker id: {{worker.workerId}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Created at: {{worker.created}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="worker-description" fxLayout="row" fxLayoutAlign="space-between start" >
+      <div>
+        <span>Modified at:&nbsp;&nbsp; <b>{{worker.modified}}</b></span>
+      </div>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="editWorker(worker)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="worker-description" fxLayout="row" fxLayoutAlign="start">
+      <div *ngIf="worker.name !== undefined; else elseNameBlock">
+        <div *ngIf="!editWorkerEvent">
+          <span>Name:&nbsp;&nbsp; <b>{{worker.name}}</b></span>
+        </div>
+        <div *ngIf="editWorkerEvent">
+          <mat-form-field class="worker-add-panel-form">
+            <mat-label>Name:</mat-label>
+            <input matInput placeholder="Worker Name" [(ngModel)]="newName">
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-template #elseNameBlock>Name is not assigned</ng-template>
+
+      <div *ngIf="worker.type !== undefined; else elseTypeBlock">
+        <div *ngIf="!editWorkerEvent">
+          <span>Type:&nbsp;&nbsp; <b>{{worker.type}}</b></span>
+        </div>
+        <div *ngIf="editWorkerEvent">
+          <mat-form-field class="worker-add-panel-form">
+            <mat-label>Type:</mat-label>
+            <mat-select (selectionChange)="onTypeChange($event)" [(value)]="selectedType.value">
+              <mat-option *ngFor="let type of types" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-template #elseTypeBlock>Type is not assigned</ng-template>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="worker.brigade !== undefined; else elseBrigadeBlock">
+      <div>
+        <span><b>Brigade id:</b>&nbsp;&nbsp; <b>{{worker.brigade.brigadeId}}</b></span>
+      </div>
+      <div class="worker-description" fxLayout="row" fxLayoutAlign="space-between center" >
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{worker.brigade.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{worker.brigade.modified}}</b></span>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseBrigadeBlock>Brigade is not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div class="worker-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="cancelWorker(worker)">Cancel</button>
+      <button mat-raised-button (click)="saveWorker(worker)">Save</button>
+      <button mat-raised-button (click)="deleteWorker(worker)">Delete</button>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>

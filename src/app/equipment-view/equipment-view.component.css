@@ -1,0 +1,50 @@
+.add-equipment-button {
+  margin-bottom: 20px;
+}
+
+.add-component-button {
+  margin-left: 6px;
+}
+
+.mat-expansion-panel {
+  min-width: 600px;
+}
+
+.equipment-description {
+  margin-top: 2px;
+}
+
+.equipment-description div {
+  margin-right: 20px;
+  margin-top: 2px;
+}
+
+.equipment-description button {
+  margin-left: 10px;
+}
+
+mat-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.panel-header-icon-button {
+  margin-right: 10px;
+}
+
+.panel-header-icon-button .mat-icon {
+  font-size: 22px;
+}
+
+.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  line-height: 20px;
+}
+
+.equipment-add-panel-form {
+  margin-right: 46px;
+}

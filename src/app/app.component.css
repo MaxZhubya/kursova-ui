@@ -1,0 +1,15 @@
+app-sidebar {
+  width: 260px;
+  background-color: lightblue;
+}
+
+/deep/ app-content {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+}
+
+.main {
+  padding-top: 60px;
+
+}

@@ -1,0 +1,88 @@
+
+<button class="add-item-button" mat-raised-button (click)="createBrigade()">Add</button>
+
+<mat-accordion>
+
+  <!--  --------------------   Main Brigade Panel   ----------------- -->
+
+  <mat-expansion-panel *ngFor="let brigade of brigades" (closed)="onAfterCollapse(brigade)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Brigade id: {{brigade.brigadeId}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Created at: {{brigade.created}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+      <div>
+        <span>Modified at:&nbsp;&nbsp; <b>{{brigade.modified}}</b></span>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div>
+      <span><b>Workers:</b></span>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="addWorkerEvent(brigade)">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+
+    <ng-container *ngIf="brigade.workers !== undefined; else elseWorkerBlock">
+      <ng-container *ngFor="let worker of brigade.workers">
+        <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+          <div>
+            <span>ID:&nbsp;&nbsp; <b>{{worker.workerId}}</b></span>
+          </div>
+          <div>
+            <span>Name:&nbsp;&nbsp; <b>{{worker.name}}</b></span>
+          </div>
+          <div>
+            <span>Type:&nbsp;&nbsp; <b>{{worker.type}}</b></span>
+          </div>
+        </div>
+
+        <div class="item-description" fxLayout="row" fxLayoutAlign="space-between start" >
+          <div>
+            <span>Created at:&nbsp;&nbsp; <b>{{worker.created}}</b></span>
+          </div>
+          <div>
+            <span>Modified at:&nbsp;&nbsp; <b>{{worker.modified}}</b></span>
+          </div>
+          <button mat-icon-button color="primary" (click)="deleteWorkerEvent(brigade, worker)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #elseWorkerBlock>Are not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="brigade.area !== undefined; else elseAreaBlock">
+      <div>
+        <span><b>Area id:</b>&nbsp;&nbsp; <b>{{brigade.area.areaId}}</b></span>
+      </div>
+      <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{brigade.area.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{brigade.area.modified}}</b></span>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseAreaBlock>Area is not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="cancelBrigade(brigade)">Cancel</button>
+      <button mat-raised-button (click)="saveBrigade(brigade)">Save</button>
+      <button mat-raised-button (click)="deleteBrigade(brigade)">Delete</button>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>

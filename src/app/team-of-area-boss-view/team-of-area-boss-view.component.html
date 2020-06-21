@@ -1,0 +1,97 @@
+
+<button class="add-item-button" mat-raised-button (click)="createTeam()">Add</button>
+
+<mat-accordion>
+
+  <!--  --------------------   Main Team Panel   ----------------- -->
+
+  <mat-expansion-panel *ngFor="let team of teams" (closed)="onAfterCollapse(team)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Team id: {{team.teamId}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Created at: {{team.created}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+      <div>
+        <span>Modified at:&nbsp;&nbsp; <b>{{team.modified}}</b></span>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div>
+      <span><b>TechnicalPersonals:</b></span>
+      <button mat-icon-button class="add-component-button" color="primary" (click)="addPersonalEvent(team)">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+
+    <ng-container *ngIf="team.technicalPersonals !== undefined; else elsePersonalBlock">
+      <ng-container *ngFor="let techPersonal of team.technicalPersonals">
+        <div class="item-description" fxLayout="row" fxLayoutAlign="space-between start" >
+          <div>
+            <span>ID:&nbsp;&nbsp; <b>{{techPersonal.techPersonalId}}</b></span>
+          </div>
+          <div>
+            <span>Name:&nbsp;&nbsp; <b>{{techPersonal.personalName}}</b></span>
+          </div>
+          <div>
+            <span>Type:&nbsp;&nbsp; <b>{{techPersonal.personalType}}</b></span>
+          </div>
+          <div>
+            <span>Description:&nbsp;&nbsp; <b>{{techPersonal.description}}</b></span>
+          </div>
+          <button mat-icon-button color="primary" (click)="deletePersonalEvent(team, techPersonal)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
+
+        <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+          <div>
+            <span>Created at:&nbsp;&nbsp; <b>{{techPersonal.created}}</b></span>
+          </div>
+          <div>
+            <span>Modified at:&nbsp;&nbsp; <b>{{techPersonal.modified}}</b></span>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #elsePersonalBlock>Are not assigned</ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="team.area !== undefined; else elseAreaBlock">
+      <div>
+        <span><b>Area id:</b>&nbsp;&nbsp; <b>{{team.area.areaId}}</b></span>
+      </div>
+      <div class="item-description" fxLayout="row" fxLayoutAlign="space-between start" >
+        <div>
+          <span>Created at:&nbsp;&nbsp; <b>{{team.area.created}}</b></span>
+        </div>
+        <div>
+          <span>Modified at:&nbsp;&nbsp; <b>{{team.area.modified}}</b></span>
+        </div>
+        <button mat-icon-button  color="primary" (click)="deleteAreaEvent(team)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </div>
+    <ng-template #elseAreaBlock>Area is not assigned
+      <button mat-icon-button class="add-component-button" color="primary" (click)="addAreaEvent(team)">
+        <mat-icon>add_box</mat-icon>
+      </button></ng-template>
+
+    <mat-divider></mat-divider>
+
+    <div class="item-description" fxLayout="row" fxLayoutAlign="end" >
+      <button mat-raised-button (click)="cancelTeam(team)">Cancel</button>
+      <button mat-raised-button (click)="saveTeam(team)">Save</button>
+      <button mat-raised-button (click)="deleteTeam(team)">Delete</button>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>
