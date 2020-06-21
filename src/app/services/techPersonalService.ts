@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TechnicalPersonalEdit} from '../model/technicalPersonal-edit';
 
 const localUrl = 'http://localhost:8888/api/technicalPersonal';
+//const localUrl = '/api/technicalPersonal';
 
 @Injectable()
 export class TechPersonalService {

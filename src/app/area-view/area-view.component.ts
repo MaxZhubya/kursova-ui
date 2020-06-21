@@ -138,6 +138,7 @@ export class AreaViewComponent implements OnInit {
   // -------------------------------------
   // TeamOfAreaBoss methods
   // -------------------------------------
+
   addTeamOfAreaBossEvent(area: Area) {
     console.log('AddTeamOfAreaBossEvent enter');
     this.teamOfAreaBossService.loadAllTeams()

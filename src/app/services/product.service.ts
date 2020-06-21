@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {WorkerMyEdit} from '../model/worker-my-edit';
 import {ProductEdit} from '../model/product-edit';
 
 const localUrl = 'http://localhost:8888/api/product';
+//const localUrl = '/api/product';
 
 @Injectable()
 export class ProductService {

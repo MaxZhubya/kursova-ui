@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TeamOfAreaBossEdit} from '../model/teamOfAreaBoss-edit';
 
 const localUrl = 'http://localhost:8888/api/teamOfAreaBoss';
+//const localUrl = '/api/teamOfAreaBoss';
 
 @Injectable()
 export class TeamOfAreaBossService {

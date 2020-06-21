@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AreaEdit} from '../model/area-edit';
 
 const localUrl = 'http://localhost:8888/api/area';
+//const localUrl = '/api/area';
 
 @Injectable()
 export class AreaService {

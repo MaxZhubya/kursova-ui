@@ -170,7 +170,7 @@ export class BrigadeViewComponent implements OnInit {
   }
 
   deleteWorkerEvent(brigade: Brigade, worker: WorkerMy) {
-    console.log('DeleteWorkerEvent, Brigade id: ' + brigade.brigadeId + ', Area id: ' + brigade.area.areaId);
+    console.log('DeleteWorkerEvent, Brigade id: ' + brigade.brigadeId + ', Worker id: ' + worker.workerId);
     let currentBrigade: Brigade = this.brigades.find(value => value.brigadeId === brigade.brigadeId);
     if (currentBrigade.workers === undefined || currentBrigade.workers.length === 0)
       return;
