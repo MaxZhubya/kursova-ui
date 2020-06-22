@@ -1,3 +1,9 @@
 <div class="content-body">
+
+  <div class="welcome" *ngIf="isWelcomeVisible">
+    <h1>Welcome to Kursova Factory</h1><br>
+    <span class="welcome-select">Select item to view</span>
+  </div>
+
   <router-outlet></router-outlet>
 </div>

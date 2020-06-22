@@ -37,7 +37,7 @@
   <mat-expansion-panel *ngFor="let laboratory of laboratories" >
     <mat-expansion-panel-header>
       <mat-panel-title>
-        ID: {{laboratory.laboratoryId}}
+        Laboratory id: {{laboratory.laboratoryId}}
       </mat-panel-title>
       <mat-panel-description>
         Created at: {{laboratory.created}}
@@ -68,7 +68,7 @@
           <div>
             <span>ID:&nbsp;&nbsp; <b>{{equipment.equipmentId}}</b></span>
           </div>
-          <div>
+          <div fxFlex="33">
             <span>Type:&nbsp;&nbsp; <b>{{equipment.type}}</b></span>
           </div>
           <div>
@@ -106,7 +106,7 @@
           <div>
             <span>ID:&nbsp;&nbsp; <b>{{product.productId}}</b></span>
           </div>
-          <div>
+          <div fxFlex="25">
             <span>Category:&nbsp;&nbsp; <b>{{product.category}}</b></span>
           </div>
           <div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import {NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'app-content',
@@ -7,7 +8,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class ContentComponent implements OnInit, OnDestroy {
 
-  constructor() {}
+  isWelcomeVisible: boolean = true;
+
+  constructor(public router: Router) {
+
+    router.events.subscribe(e => {
+      if (e instanceof NavigationStart) {
+        if (e.url.endsWith('/') || e.url.endsWith('\\'))
+          this.isWelcomeVisible = true;
+        else
+          this.isWelcomeVisible = false;
+      }
+    });
+
+  }
 
   ngOnInit(): void {
   }

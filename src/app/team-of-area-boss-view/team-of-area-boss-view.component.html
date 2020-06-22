@@ -32,16 +32,19 @@
 
     <ng-container *ngIf="team.technicalPersonals !== undefined; else elsePersonalBlock">
       <ng-container *ngFor="let techPersonal of team.technicalPersonals">
-        <div class="item-description" fxLayout="row" fxLayoutAlign="space-between start" >
-          <div>
+        <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
+          <div fxFlex="10">
             <span>ID:&nbsp;&nbsp; <b>{{techPersonal.techPersonalId}}</b></span>
           </div>
-          <div>
+          <div fxFlex="40">
             <span>Name:&nbsp;&nbsp; <b>{{techPersonal.personalName}}</b></span>
           </div>
           <div>
             <span>Type:&nbsp;&nbsp; <b>{{techPersonal.personalType}}</b></span>
           </div>
+        </div>
+
+        <div class="item-description" fxLayout="row" fxLayoutAlign="space-between start" >
           <div>
             <span>Description:&nbsp;&nbsp; <b>{{techPersonal.description}}</b></span>
           </div>
@@ -51,7 +54,7 @@
         </div>
 
         <div class="item-description" fxLayout="row" fxLayoutAlign="start" >
-          <div>
+          <div fxFlex="44">
             <span>Created at:&nbsp;&nbsp; <b>{{techPersonal.created}}</b></span>
           </div>
           <div>
