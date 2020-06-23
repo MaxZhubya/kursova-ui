@@ -131,6 +131,13 @@ export class BrigadeViewComponent implements OnInit {
           this.workerList.forEach(value => {
             let viewValue: string = 'Id: ' + value.workerId + ', ' + value.name + ' - ' + value.type;
             let disableValue: boolean = false;
+
+            // Check whether current object already contains this item
+            if (brigade.workers !== undefined
+              && brigade.workers.find(item => item.workerId === value.workerId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.brigade !== undefined && value.brigade !== null) {
               disableValue = true;
               viewValue += ' : ' + value.brigade.brigadeId;
@@ -148,7 +155,7 @@ export class BrigadeViewComponent implements OnInit {
     console.log('Open Dialog for Brigade id: ' + brigade.brigadeId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '450px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Workers" }
     });
 
     dialogRef.afterClosed()

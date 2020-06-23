@@ -140,6 +140,12 @@ export class WorkshopViewComponent implements OnInit {
             let viewValue: string = 'Id: ' + value.areaId;
             let disableValue: boolean = false;
 
+            // Check whether current object already contains this item
+            if (workshop.areas !== undefined
+              && workshop.areas.find(item => item.areaId === value.areaId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.workshop !== undefined && value.workshop !== null)
               disableValue = true;
 
@@ -158,7 +164,7 @@ export class WorkshopViewComponent implements OnInit {
     console.log('Open Dialog for Workshop id: ' + workshop.workshopId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Areas" }
     });
 
     dialogRef.afterClosed()
@@ -204,6 +210,12 @@ export class WorkshopViewComponent implements OnInit {
             let viewValue: string = 'Id: ' + value.laboratoryId;
             let disableValue: boolean = false;
 
+            // Check whether current object already contains this item
+            if (workshop.laboratories !== undefined
+              && workshop.laboratories.find(item => item.laboratoryId === value.laboratoryId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.definition !== undefined) {
               viewValue += ', ' + value.definition;
             }
@@ -220,7 +232,7 @@ export class WorkshopViewComponent implements OnInit {
     console.log('Open Dialog for Workshop id: ' + workshop.workshopId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Laboratories" }
     });
 
     dialogRef.afterClosed()

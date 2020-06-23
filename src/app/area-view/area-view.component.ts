@@ -8,7 +8,6 @@ import {TeamOfAreaBossService} from '../services/teamOfAreaBoss.service';
 import {TeamOfAreaBoss} from '../model/teamOfAreaBoss';
 import {MatDialog} from '@angular/material/dialog';
 import {SelectDialogSingleComponent} from '../select-dialog-single/select-dialog-single.component';
-import {TechnicalPersonal} from '../model/technicalPersonal';
 import {BrigadeService} from '../services/brigade.service';
 import {ProductService} from '../services/product.service';
 import {WorkshopService} from '../services/workshop.service';
@@ -165,7 +164,7 @@ export class AreaViewComponent implements OnInit {
     console.log('Open Dialog for Area id: ' + area.areaId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": false }
+      data: { "selectedDataList": data, "isMultiple": false, "title": "Team of Area" }
     });
 
     dialogRef.afterClosed()
@@ -205,10 +204,18 @@ export class AreaViewComponent implements OnInit {
           this.brigadeList.forEach(value => {
             let viewValue: string = 'Id: ' + value.brigadeId;
             let disableValue: boolean = false;
+
+            // Check whether current object already contains this item
+            if (area.brigades !== undefined
+              && area.brigades.find(item => item.brigadeId === value.brigadeId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.area !== undefined) {
               disableValue = true;
               viewValue += ', Area id: ' + value.area.areaId;
             }
+
             selectData.push(new SelectDataImpl(value.brigadeId, viewValue, disableValue));
           });
           this.openBrigadeDialog(area, selectData);
@@ -221,7 +228,7 @@ export class AreaViewComponent implements OnInit {
     console.log('Open Dialog for Area id: ' + area.areaId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Brigades" }
     });
 
     dialogRef.afterClosed()
@@ -266,10 +273,18 @@ export class AreaViewComponent implements OnInit {
           this.productList.forEach(value => {
             let viewValue: string = 'Id: ' + value.productId;
             let disableValue: boolean = false;
+
+            // Check whether current object already contains this item
+            if (area.products !== undefined
+              && area.products.find(item => item.productId === value.productId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.area !== undefined) {
               disableValue = true;
               viewValue += ', Area id: ' + value.area.areaId;
             }
+
             selectData.push(new SelectDataImpl(value.productId, viewValue, disableValue));
           });
           this.openProductDialog(area, selectData);
@@ -282,7 +297,7 @@ export class AreaViewComponent implements OnInit {
     console.log('Open Dialog for Area id: ' + area.areaId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Products" }
     });
 
     dialogRef.afterClosed()
@@ -309,67 +324,6 @@ export class AreaViewComponent implements OnInit {
     if (currentArea.products === undefined || currentArea.products.length === 0)
       return;
     currentArea.products = currentArea.products.filter(value => value.productId !== product.productId);
-    // Update this.isAreaDataChanged value
-    this.isAreaDataChanged = true;
-  }
-
-  // -------------------------------------
-  // Workshop methods
-  // -------------------------------------
-
-  addWorkshopEvent(area: Area) {
-    console.log('AddWorkshopEvent enter');
-    this.workshopService.loadAllWorkshops()
-      .subscribe(
-        (data: Workshop[]) => {
-          this.workshopList = data;
-          let selectData: SelectData [] = [];
-          this.workshopList.forEach(value => {
-            let viewValue: string = 'Id: ' + value.workshopId;
-            let disableValue: boolean = false;
-            if (value.definition !== undefined && value.definition.length !== 0) {
-              disableValue = true;
-              viewValue += ', definition: ' + value.definition;
-            }
-            selectData.push(new SelectDataImpl(value.workshopId, viewValue, disableValue));
-          });
-          this.openWorkshopDialog(area, selectData);
-        },
-        error => console.log(error)
-      );
-  }
-
-  openWorkshopDialog(area: Area, data: SelectData[]): void {
-    console.log('Open Dialog for Area id: ' + area.areaId);
-    const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
-      width: '350px',
-      data: { "selectedDataList": data, "isMultiple": false }
-    });
-
-    dialogRef.afterClosed()
-      .subscribe((result: number []) => {
-        console.log('The dialog was closed, selected value: ' + result);
-        if (result === undefined || result.length === 0)
-          return;
-        let currentArea: Area = this.areas.find(value => value.areaId === area.areaId);
-        result.forEach(workshopId => {
-          let workshop: Workshop = this.workshopList.find(value => value.workshopId === workshopId);
-          if (currentArea.workshop === undefined)
-            currentArea.workshop = null;
-          currentArea.workshop = area.workshop;
-        });
-        this.dialog.ngOnDestroy();
-        // Update this.isAreaDataChanged value
-        this.isAreaDataChanged = true;
-      });
-  }
-
-  deleteWorkshopEvent(area: Area) {
-    console.log('DeleteWorkshopEvent, Area id: ' + area.areaId + ', Workshop id: ' + area.workshop.workshopId);
-    let currentArea: Area = this.areas.find(value => value.areaId === area.areaId);
-    if (currentArea.workshop === undefined || currentArea.workshop === null)
-      return;
-    currentArea.workshop.workshopId = area.workshop.workshopId;
     // Update this.isAreaDataChanged value
     this.isAreaDataChanged = true;
   }

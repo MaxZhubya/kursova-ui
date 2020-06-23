@@ -140,7 +140,7 @@ export class TeamOfAreaBossViewComponent implements OnInit {
     console.log('Open Dialog for Team id: ' + team.teamId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": false }
+      data: { "selectedDataList": data, "isMultiple": false, "title": "Area" }
     });
 
     dialogRef.afterClosed()
@@ -181,8 +181,16 @@ export class TeamOfAreaBossViewComponent implements OnInit {
             let viewValue: string = 'Id: ' + value.techPersonalId
               + ', ' + value.personalName + ' - ' + value.personalType;
             let disableValue: boolean = false;
+
+            // Check whether current object already contains this item
+            if (team.technicalPersonals !== undefined
+              && team.technicalPersonals.find(item => item.techPersonalId === value.techPersonalId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.teamOfAreaBoss !== undefined)
               disableValue = true;
+
             selectData.push(new SelectDataImpl(value.techPersonalId, viewValue, disableValue));
           });
           this.openPersonalDialog(team, selectData);
@@ -195,7 +203,7 @@ export class TeamOfAreaBossViewComponent implements OnInit {
     console.log('Open Dialog for Team id: ' + team.teamId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '550px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Personals" }
     });
 
     dialogRef.afterClosed()
@@ -225,6 +233,5 @@ export class TeamOfAreaBossViewComponent implements OnInit {
     // Update this.isAreaDataChanged value
     this.isDataChanged = true;
   }
-
 
 }

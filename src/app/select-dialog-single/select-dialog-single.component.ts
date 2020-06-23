@@ -13,7 +13,7 @@ export class SelectDialogSingleComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<SelectDialogSingleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { "selectedDataList": SelectData[], "isMultiple": boolean}) {}
+    @Inject(MAT_DIALOG_DATA) public data: { "selectedDataList": SelectData[], "isMultiple": boolean, "title": string }) {}
 
   ngOnInit(): void {
   }

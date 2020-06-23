@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>Select item</h1>
+<h1 mat-dialog-title>Select {{data.title}}</h1>
 <div mat-dialog-content class="single-dialog">
   <mat-form-field>
-    <mat-label>Choose one item</mat-label>
+    <mat-label>Choose item</mat-label>
     <mat-select (selectionChange)="onSelectEvent($event)" [multiple]="data.isMultiple">
       <mat-option *ngFor="let item of data.selectedDataList" [value]="item.value" [disabled]="item.disable">
         {{item.viewValue}}

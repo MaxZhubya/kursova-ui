@@ -143,6 +143,13 @@ export class LaboratoryViewComponent implements OnInit {
           this.equipmentList.forEach(value => {
             let viewValue: string = 'Id: ' + value.equipmentId;
             let disableValue: boolean = false;
+
+            // Check whether current laboratory already contains this equipment
+            if (laboratory.equipments !== undefined
+              && laboratory.equipments.find(equipment => equipment.equipmentId === value.equipmentId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.laboratory !== undefined) {
               disableValue = true;
               viewValue += ', Laboratory id: ' + value.laboratory.laboratoryId;
@@ -159,7 +166,7 @@ export class LaboratoryViewComponent implements OnInit {
     console.log('Open Dialog for Laboratory id: ' + laboratory.laboratoryId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Equipments" }
     });
 
     dialogRef.afterClosed()
@@ -204,10 +211,18 @@ export class LaboratoryViewComponent implements OnInit {
           this.productList.forEach(value => {
             let viewValue: string = 'Id: ' + value.productId;
             let disableValue: boolean = false;
+
+            // Check whether current laboratory already contains this product
+            if (laboratory.products !== undefined
+              && laboratory.products.find(product => product.productId === value.productId) !== undefined) {
+              disableValue = true;
+            }
+
             if (value.laboratory !== undefined) {
               disableValue = true;
               viewValue += ', Laboratory id: ' + value.laboratory.laboratoryId;
             }
+
             selectData.push(new SelectDataImpl(value.productId, viewValue, disableValue));
           });
           this.openProductDialog(laboratory, selectData);
@@ -220,7 +235,7 @@ export class LaboratoryViewComponent implements OnInit {
     console.log('Open Dialog for Laboratory id: ' + laboratory.laboratoryId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Products" }
     });
 
     dialogRef.afterClosed()
@@ -284,7 +299,7 @@ export class LaboratoryViewComponent implements OnInit {
     console.log('Open Dialog for Laboratory id: ' + laboratory.laboratoryId);
     const dialogRef = this.dialog.open(SelectDialogSingleComponent, {
       width: '350px',
-      data: { "selectedDataList": data, "isMultiple": true }
+      data: { "selectedDataList": data, "isMultiple": true, "title": "Workshops" }
     });
 
     dialogRef.afterClosed()
