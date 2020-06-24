@@ -7,9 +7,9 @@ app-sidebar {
   position: relative;
   overflow: auto;
   width: 100%;
+  background-image: linear-gradient(to right, #ffffff, lightblue);
 }
 
 .main {
   padding-top: 60px;
-
 }
